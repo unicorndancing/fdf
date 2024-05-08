@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_map.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlapique <mlapique@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 12:31:26 by mlapique          #+#    #+#             */
-/*   Updated: 2024/05/08 14:55:09 by mlapique         ###   ########.fr       */
+/*   Created: 2023/10/30 16:54:46 by mlapique          #+#    #+#             */
+/*   Updated: 2023/10/31 14:17:23 by mlapique         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-// void	ini_parsing(int fd)
-// {
-// 	t_point			**map;
-// 	char			*line;
-// 	char			**secondsplit;
-// 	char			**resultsplit;
-// 	int				i;
-
-// 	i = 0;
-// 	line = get_next_line(fd);
-// 	while (1)
-// 	{
-// 		resultsplit = ft_split(line, ' ');
-// 	}
-// 	//return (map);
-// }
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!lst || !new)
+		return ;
+	if (*lst)
+		new->next = *lst;
+	*lst = new;
+}

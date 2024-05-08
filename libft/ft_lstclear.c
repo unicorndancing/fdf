@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_map.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlapique <mlapique@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 12:31:26 by mlapique          #+#    #+#             */
-/*   Updated: 2024/05/08 14:55:09 by mlapique         ###   ########.fr       */
+/*   Created: 2023/10/30 16:54:14 by mlapique          #+#    #+#             */
+/*   Updated: 2023/11/02 17:01:50 by mlapique         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-// void	ini_parsing(int fd)
-// {
-// 	t_point			**map;
-// 	char			*line;
-// 	char			**secondsplit;
-// 	char			**resultsplit;
-// 	int				i;
+void	ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list	*next;
 
-// 	i = 0;
-// 	line = get_next_line(fd);
-// 	while (1)
-// 	{
-// 		resultsplit = ft_split(line, ' ');
-// 	}
-// 	//return (map);
-// }
+	if (!lst)
+		return ;
+	if (*del)
+	{
+		while (*lst)
+		{
+			next = (*lst)->next;
+			ft_lstdelone(*lst, (del));
+			*lst = next;
+		}
+	}
+	lst = NULL;
+}

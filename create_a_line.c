@@ -6,33 +6,31 @@
 /*   By: mlapique <mlapique@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:08:13 by mlapique          #+#    #+#             */
-/*   Updated: 2024/05/03 15:52:45 by mlapique         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:01 by mlapique         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	line(t_line_necessary line, t_mlx mlx)
+int		integerpart(float x)
 {
-	float	grad;
-	int		i;
-	int		godownornot;
-
-	godownornot = steepness(line.p1, line.p2);
-	grad = rgrad(line.p1, line.p2);
-	line.first_point = partone(line.p1, line.p2, grad, mlx);
-	line.last_point = parttwo(line.p1, line.p2, grad, mlx);
-	i = line.first_point;
-	if (godownornot == 1)
-	{
-		while (i < line.last_point)
-		{
-			mlx_put_pixel(mlx.image, );
-		}
-	}
-
+	return (floor(x));
 }
 
+int		roundbottom(float x)
+{
+	return (floor(x + 0.5));
+}
+
+float floatpart(float x)
+{
+	return (x - integerpart(x));
+}
+
+float	floatipart(float x)
+{
+	return (1 - floatpart(x));
+}
 
 float	rgrad(t_point p1, t_point p2)
 {
@@ -69,6 +67,7 @@ int	steepness(t_point p1, t_point p2)
 		p1 = swap;
 		return (0);
 	}
+	return (2);
 }
 
 int	partone(t_point p1, t_point p2, float grad, t_mlx mlx)
@@ -90,9 +89,9 @@ int	partone(t_point p1, t_point p2, float grad, t_mlx mlx)
 	else
 	{
 		mlx_put_pixel(mlx.image, xend, truc, 0xFFFF);
-		mlx_put_pixel(mlx.image, xend, truc + 1 , 0xFFFF);
+		mlx_put_pixel(mlx.image, xend, truc + 1, 0xFFFF);
 	}
-	return (truc);
+	return (truc + grad);
 }
 
 int	parttwo(t_point p1, t_point p2, float grad, t_mlx mlx)
@@ -117,4 +116,31 @@ int	parttwo(t_point p1, t_point p2, float grad, t_mlx mlx)
 		mlx_put_pixel(mlx.image, xend, truc + 1 , 0xFFFF);
 	}
 	return (truc);
+}
+
+void	line(t_line_necessary line, t_mlx mlx)
+{
+	float	grad;
+	int		i;
+	int		godownornot;
+	float	place;
+	float	usefull;
+
+	godownornot = steepness(line.p1, line.p2);
+	grad = rgrad(line.p1, line.p2);
+	place = partone(line.p1, line.p2, grad, mlx);
+	line.last_point = parttwo(line.p1, line.p2, grad, mlx);
+	i = line.first_point;
+	if (godownornot == 1)
+	{
+		while (i < line.last_point)
+		{
+			usefull = 1 - (place - floor(place));
+			mlx_put_pixel(mlx.image, i, floor(place), 0xFFFF);
+			usefull = (place - floor(place));
+			mlx_put_pixel(mlx.image, i, floor(place) + 1, 0xFFFF);
+			place += grad;
+			i++;
+		}
+	}
 }

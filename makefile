@@ -1,4 +1,4 @@
-NAME	:= Game
+NAME	:= fdf
 CC 		:= cc
 CFLAGS	:= -Wunreachable-code -Ofast
 LIBMLX	:= ./MLX42

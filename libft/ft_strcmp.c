@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_map.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlapique <mlapique@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 12:31:26 by mlapique          #+#    #+#             */
-/*   Updated: 2024/05/08 14:55:09 by mlapique         ###   ########.fr       */
+/*   Created: 2023/12/07 16:21:32 by mlapique          #+#    #+#             */
+/*   Updated: 2023/12/07 16:23:11 by mlapique         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-// void	ini_parsing(int fd)
-// {
-// 	t_point			**map;
-// 	char			*line;
-// 	char			**secondsplit;
-// 	char			**resultsplit;
-// 	int				i;
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*s1cpy;
+	unsigned char	*s2cpy;
 
-// 	i = 0;
-// 	line = get_next_line(fd);
-// 	while (1)
-// 	{
-// 		resultsplit = ft_split(line, ' ');
-// 	}
-// 	//return (map);
-// }
+	s1cpy = (unsigned char *)s1;
+	s2cpy = (unsigned char *)s2;
+	i = 0;
+	while (s1cpy[i] == s2cpy[i] && s2cpy[i] && s1cpy[i])
+		i++;
+	return (s1cpy[i] - s2cpy[i]);
+}
