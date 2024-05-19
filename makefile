@@ -1,13 +1,12 @@
 NAME	:= fdf
 CC 		:= cc
-CFLAGS	:= -Wunreachable-code -Ofast
+CFLAGS	:= -Wunreachable-code -Ofast -g3
 LIBMLX	:= ./MLX42
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRCS	:= main.c \
 			create_a_line.c \
-			parsing_map.c
 			
 OBJS	:= ${SRCS:.c=.o}
 

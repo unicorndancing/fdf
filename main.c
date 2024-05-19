@@ -6,46 +6,93 @@
 /*   By: mlapique <mlapique@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:38:14 by mlapique          #+#    #+#             */
-/*   Updated: 2024/05/08 16:24:05 by mlapique         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:24:19 by mlapique         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+int	ft_strlen_for_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return (-666);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char	ini(mlx_t *mlx, mlx_image_t *image, char *argv[])
+{
+	t_point	**tabpoint;
+	int		fd;
+	int		*i;
+	int		*j;
+
+	if (argv[1] == NULL)
+		return (-666);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		return (-666);
+	tabpoint = malloc((sizeof(t_point ***) * size_map(fd, i, j)) + 1);
+	tabpoint = parsing(fd, tabpoint);
+	//line(lines, mlx, image);
+	return ('0');
+}
+
+int	size_map(int fd, int *i, int *j)
+{
+	char	*line;
+	char	**nbpoint;
+
+	line = get_next_line(fd);
+	if (!line)
+		return (-666);
+	i++;
+	nbpoint = ft_split(line, ' ');
+	if (!nbpoint)
+		return (-666);
+	j = ft_strlen_for_tab(nbpoint);
+	while (line)
+	{
+		i++;
+		free(line);
+		free(nbpoint);
+		line = get_next_line(fd);
+		nbpoint = ft_split(line, ' ');
+		if (!nbpoint)
+			return (-666);
+		if (j != ft_strlen_for_tab(nbpoint))
+			return (-666);
+	}
+	return (i);
+}
+
 int	main(int argc, char *argv[])
 {
-	t_mlx				mlx;
-	t_line_necessary	line_value;
+	mlx_t		*mlx;
+	mlx_image_t	*image;
 
-	mlx.mlx = mlx_init(1080, 1920, "FDF", true);
-	if (!mlx.mlx)
+	mlx = mlx_init(3000, 1920, "FDF", true);
+	if (!mlx)
 	{
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	mlx.image = mlx_new_image(mlx.mlx, 1080, 1920);
-	if (!mlx.image)
+	image = mlx_new_image(mlx, 3000, 1920);
+	if (!image)
 	{
-		mlx_close_window(mlx.mlx);
+		mlx_close_window(mlx);
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	if (mlx_image_to_window(mlx.mlx, mlx.image, 0, 0) == -1)
+	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
 	{
-		mlx_close_window(mlx.mlx);
+		mlx_close_window(mlx);
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	line_value.p1.x = 10;
-	line_value.p1.y = 96;
-	line_value.p1.z = 0;
-	line_value.p1.color = 0;
-	line_value.p2.x = 1000;
-	line_value.p2.y = 1000;
-	line_value.p2.z = 0;
-	line_value.p2.color = 0;
-	line(line_value, mlx);
-	mlx_loop(mlx.mlx);
-	mlx_terminate(mlx.mlx);
-	return (EXIT_SUCCESS);
+	return (ini(mlx, image, argv), mlx_loop(mlx), mlx_terminate(mlx), 0);
 }
